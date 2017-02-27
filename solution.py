@@ -11,6 +11,7 @@ def assign_value(values, box, value):
         assignments.append(values.copy())
     return values
 
+
 def naked_twins(values):
     """Eliminate values using the naked twins strategy.
     Args:
@@ -50,9 +51,11 @@ def naked_twins(values):
                     pass
     return values
 
+
 def cross(A, B):
     "Cross product of elements in A and elements in B."
     return [r+c for r in A for c in B]
+
 
 # from Utils
 rows = 'ABCDEFGHI'
@@ -65,14 +68,15 @@ column_units = [cross(rows, c) for c in cols]
 square_units = [cross(rs, cs) for rs in ('ABC','DEF','GHI') for cs in ('123','456','789')]
 
 #solving the diagonal sudoku: add two diagonal units in the unitlist
-diagonal_units = [[rows[idx] + cols[idx] for idx in range(0, len(cols))],[rows[idx] + cols[len(cols) - 1 - idx] for idx in range(0, len(cols))]]
+diagonal_units = [ [rows[idx] + cols[idx] for idx in range(0, len(cols))],
+                   [rows[idx] + cols[len(cols) - 1 - idx] for idx in range(0, len(cols))] ]
 unitlist = row_units + column_units + square_units + diagonal_units
 
 units = dict((s, [u for u in unitlist if s in u]) for s in boxes)
 peers = dict((s, set(sum(units[s],[]))-set([s])) for s in boxes)
 
-def grid_values(grid):
 
+def grid_values(grid):
     raw_dict = {}
     for idx in range(0, len(grid)):
         raw_dict[boxes[idx]] = grid[idx] if grid[idx] != '.' else '123456789'
@@ -96,15 +100,13 @@ def display(values):
         if r in 'CF': print(line)
     return
 
+
 def eliminate(values):
     for key, val in values.items():
         if len(val) == 1:
             for peer in peers[key]:
                 assign_value(values,peer,values[peer].translate({ord(val): ''}))
             no_single_value_box = False
-        else:
-            pass
-            # if no_single_value_box:
     return values
 
 
@@ -122,10 +124,10 @@ def only_choice(values):
                         is_only_choice = True
                         for box, val in boxes.items():
                             if digit in val: is_only_choice = False
-                        if is_only_choice == True:
+                        if is_only_choice == True: #It is the only choice
                             assign_value(values,key,digit)
-
     return values
+
 
 def reduce_puzzle(values):
     if values is False:
@@ -146,10 +148,8 @@ def reduce_puzzle(values):
             return False
     return values
 
+
 def search(values):
-
-
-
     values = reduce_puzzle(values)
     if values == False:
         return False
@@ -184,10 +184,10 @@ def solve(grid):
     Returns:
         The dictionary representation of the final sudoku grid. False if no solution exists.
     """
-
     values = grid_values(grid)
 
     return search(values)
+
 
 if __name__ == '__main__':
     diag_sudoku_grid = '2.............62....1....7...6..8...3...9...7...6..4...4....8....52.............3'
