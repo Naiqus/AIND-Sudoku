@@ -3,11 +3,11 @@
 
 # Question 1 (Naked Twins)
 Q: How do we use constraint propagation to solve the naked twins problem?  
-A: *Student should provide answer here*
+A: The Naked Twins is another constraint of Sudoku rule. Therefore we should put it in the procedure of the puzzle reduce, similar to the "Only choice" and the "Elimination", and propagate it in each iteration.
 
 # Question 2 (Diagonal Sudoku)
 Q: How do we use constraint propagation to solve the diagonal sudoku problem?  
-A: *Student should provide answer here*
+A: In fact, the diagonal sudoku problem still have the same constrains with regular sudoku problem. So we could only change the variable of the constraints (the list of unit). Our original constraint propagation will adapt to this change without modification.
 
 ### Install
 
